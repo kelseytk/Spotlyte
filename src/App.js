@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+
+import Dashboard from "./Dashboard/dashboard"
+import Navbar from './Navbar/navbar';
+
+
+
+
+class App extends Component {
+
+  doAPostRequest(body, endpoint, callback){
+    console.log("doing a post request to "+endpoint)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    };
+    console.log(requestOptions)
+    fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(res => {
+      if (!res.success){
+          console.log('some error')
+      }else{
+          console.log('success')
+
+          callback(res.data)
+      }
+    });
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <Navbar>
+          
+        </Navbar>
+        <Container>
+          <Row>
+            <Col></Col>
+            <Col xs={8}>
+              <Dashboard
+                doAPostRequest={(body, endpoint, callback)=>{this.doAPostRequest(body, endpoint, callback)}}
+              
+              />
+            </Col>
+            <Col></Col>
+          </Row>
+         </Container>
+      </div>
+    )
+  }
 }
 
 export default App;
