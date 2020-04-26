@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.io.FileWriter;
 import java.io.File;
+import java.io.PrintWriter;
 
 public class parsingMain{
 	//Latest playcount and date
@@ -21,10 +22,22 @@ public class parsingMain{
 	public static void main(String[] args){
 		String filename = "GoodFaith.txt";
 		String songName = "Nirvana";
-		System.out.println(getPlaycount(filename, songName));
-		System.out.println(date);
-		System.out.println(getArtist(filename, songName));
-		//writeTextFile(songName, artist);
+		String playlistFile = "myPlaylist.txt";
+
+		textToString(filename, songName);
+
+		String artist = getArtist();
+		int playCount = getPlaycount();
+		int myDate = getDate();
+
+		System.out.println(playCount);
+		System.out.println(myDate);
+		System.out.println(artist);
+		writePlaylistFile(songName, artist, playlistFile);
+	}
+
+	public static int getDate(){
+		return date;
 	}
 
 	public static ArrayList<Integer> getPlaycountArrayList(){
@@ -35,16 +48,17 @@ public class parsingMain{
 		return dateArray;
 	}
 
-	//Returns playcount from txt file
-	public static int getPlaycount(String filename, String songName){
+	public static void textToString(String filename, String songName){
 		try{
 			text = new String(Files.readAllBytes(Paths.get(filename)));
 		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
+		songIndex = text.indexOf(songName);
+	}
+	public static int getPlaycount(){
 		try{
-			songIndex = text.indexOf(songName);
 			//9 characters between play count and song name
 			int lastDigitIndex = songIndex - 9;
 			//Assuming playcount < 100bil, playcount should be between firstIndexGuess and lastDigitIndex
@@ -76,7 +90,7 @@ public class parsingMain{
 		return playcount;
 	}
 
-	public static String getArtist(String filename, String songName){
+	public static String getArtist(){
 		String artist = "";
 		int nameIndex;
 		String subText = text.substring(songIndex);
@@ -89,18 +103,17 @@ public class parsingMain{
 		}
 		return artist;
 	}
-	
-/*	public static void writeTextFile(String songName, String artist){
-		String newFileName = songName + ".txt";
+
+	public static void writePlaylistFile(String songName, String artist, String playlistFile){
+		File newFile = new File(playlistFile);
 		try{
-			File newFile = new File(newFileName);
-			if(!newFile.exists()){
-				newFile.createNewFile();
-			}
-			FileWriter writer = new FileWriter(newFile);
-			writer.write(songName);
-			writer.write(artist);
-			for(int i = 0; i < playcountArray.size(); i++){
+			FileWriter fileWriter = new FileWriter(playlistFile, true);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			printWriter.printf("%s\n", songName);
+			printWriter.printf("%s\n", artist);
+			printWriter.printf("%d\n\n", playcount);
+			printWriter.close();
+			/*for(int i = 0; i < playcountArray.size(); i++){
 				writer.write(playcountArray.get(i).toString());
 				writer.write(" ");
 			}
@@ -108,11 +121,11 @@ public class parsingMain{
 			for(int i = 0; i < dateArray.size(); i++){
 				writer.write(dateArray.get(i).toString());
 				writer.write(" ");
-			}
+			}*/
 		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
-	}*/	
+	}	
 }
 
