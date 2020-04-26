@@ -13,6 +13,19 @@ const SpotifyHelper= require("./api/spotifyHelper")
 
 const spotifyHelper= new SpotifyHelper()
 
+const FileReader= require("./api/filereader")
+
+const filereader= new FileReader()
+
+app.post('/api/readFile', (req, res) => {
+    console.log("readfile called")
+    res.setHeader('Content-Type', 'application/json');
+    filereader.readFile("./server/playcountdata.txt", (data)=>{
+        res.send(JSON.stringify({ success: true, data:data }));
+    })
+    
+});
+
 app.post('/api/test', (req, res) => {
     console.log("api test recieved")
     const body = req.body;
