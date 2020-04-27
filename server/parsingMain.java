@@ -33,7 +33,7 @@ public class parsingMain{
 		System.out.println(playCount);
 		System.out.println(myDate);
 		System.out.println(artist);
-		writePlaylistFile(songName, artist, playlistFile);
+		//writePlaylistFile(songName, artist, playlistFile);
 	}
 
 	public static int getDate(){
@@ -104,14 +104,15 @@ public class parsingMain{
 		return artist;
 	}
 
-	public static void writePlaylistFile(String songName, String artist, String playlistFile){
-		File newFile = new File(playlistFile);
+	public static void writePlaylistFile(Track track, String filename){
+		File newFile = new File(filename);
 		try{
-			FileWriter fileWriter = new FileWriter(playlistFile, true);
+			FileWriter fileWriter = new FileWriter(filename, true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.printf("%s\n", songName);
-			printWriter.printf("%s\n", artist);
-			printWriter.printf("%d\n\n", playcount);
+			printWriter.printf("%s\n", track.getName());
+			printWriter.printf("%s\n", track.getArtist());
+			printWriter.printf("%s\n", track.getAlbum());
+			printWriter.printf("%d\n\n", track.getPlaycount());
 			printWriter.close();
 			/*for(int i = 0; i < playcountArray.size(); i++){
 				writer.write(playcountArray.get(i).toString());

@@ -37,6 +37,7 @@ public class Track {
     public String getName() { return this.name; }
     public String getAlbum() { return this.album; }
     public String getAlbumID() { return this.albumID; }
+    public String getArtist() { return this.artist; }
     public int getPlaycount() { return this.playcount; }
     
     public void setPlaycount(int playcount) { this.playcount = playcount; }

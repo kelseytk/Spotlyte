@@ -44,7 +44,9 @@ public class DataExtracter {
             parsingMain.textToString(playcountFile.getName(), tracks[i].getName());
             tracks[i].setPlaycount(parsingMain.getPlaycount());
             tracks[i].setArtist(parsingMain.getArtist());
-            tracks[i].printTrack();
+            
+            //tracks[i].printTrack();
+            parsingMain.writePlaylistFile(tracks[i], "tracksdata.txt");
         }
     }
 
