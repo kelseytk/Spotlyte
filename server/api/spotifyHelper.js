@@ -32,7 +32,7 @@ module.exports = class SpotifyHelper {
     var token = data.userToken
     var playlisturl = data.value
 
-    exec("java server.java.DataExtracter.main playlisturl token", (error, stdout, stderr) => {
+    exec("java server.java.DataExtracter playlisturl token", (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
         return;
