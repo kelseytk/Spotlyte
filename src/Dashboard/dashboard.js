@@ -12,6 +12,7 @@ class Dashboard extends Component {
             trackList:[], 
             currentSorting:undefined,
             decreasingSorting:true,
+            formValue:undefined,
         }
     }
 
@@ -22,7 +23,7 @@ class Dashboard extends Component {
 
     updateTracklist(){
         console.log("updating track list")
-        var trackList = [
+        var trackList = [ //call data extractor 
             {
                 name: 'song 1',
                 artist : 'artsit1',
@@ -103,10 +104,17 @@ class Dashboard extends Component {
     buttonPress(){
         console.log("buttonIsPressed")
         //perform request here
-        this.props.doAPostRequest({artistId:"abc"}, "/api/getAlbums", (resdata)=>{
+        this.props.doAPostRequest({usertoken:this.props.token, value:this.state.formValue}, "/api/xjava", (resdata)=>{
             console.log("recieved in dashboard")
             console.log(resdata)
 
+        })
+    }
+
+    changeFormValue(value){
+        console.log("changing form value", value)
+        this.setState({
+            formValue:value
         })
     }
     
@@ -127,10 +135,15 @@ class Dashboard extends Component {
                 <Form>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Label> for example: https://open.spotify.com/playlist/xyz </Form.Label>
-                        <Form.Control as="textarea" rows="3" />
+                        <Form.Control
+                            onChange={(event)=>{
+                                this.changeFormValue(event.target.value)
+                    
+                            }}
+                            as="textarea" rows="3" />
                     </Form.Group>
                 </Form>
-                <Button variant="Graph" onClick={()=>this.sortTrackList(1)}>Primary</Button>
+                <Button variant="Graph" onClick={()=>this.buttonPress()}>Submit</Button>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
