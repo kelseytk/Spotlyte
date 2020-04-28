@@ -45,6 +45,17 @@ app.post('/api/getAlbums', (req, res) => {
     
 });
 
+app.post('/api/xjava', (req, res) => {
+    console.log("api xjava")
+    const body = req.body;
+    console.log(body)
+    res.setHeader('Content-Type', 'application/json');
+    spotifyHelper.xjava(body, (data)=>{
+        res.send(JSON.stringify({ success: true, data:data }));
+    })
+    
+});
+
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
 );

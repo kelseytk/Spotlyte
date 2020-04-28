@@ -7,14 +7,26 @@ import Row from 'react-bootstrap/Row'
 
 import Dashboard from "./Dashboard/dashboard"
 import Navbar from './Navbar/navbar';
+import Login from "./Dashboard/login"
 
 
 
 
 class App extends Component {
 
+  constructor(){
+    super()
+    this.state={token:undefined}
+  }
+
+  changeUserToken(token){
+    this.setState({token})
+
+  }
+
   doAPostRequest(body, endpoint, callback){
     console.log("doing a post request to "+endpoint)
+    console.log(body)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -44,10 +56,21 @@ class App extends Component {
           <Row>
             <Col></Col>
             <Col xs={8}>
-              <Dashboard
-                doAPostRequest={(body, endpoint, callback)=>{this.doAPostRequest(body, endpoint, callback)}}
-              
-              />
+              {!this.state.token ?
+                <Login 
+                  token={this.state.token}
+                  changeUserToken={(t)=>{
+                    this.changeUserToken(t)
+                  }}
+                /> 
+                  :
+                  <Dashboard
+                    token={this.state.token}
+
+                    doAPostRequest={(body, endpoint, callback)=>{this.doAPostRequest(body, endpoint, callback)}}
+          
+                  />
+            }
             </Col>
             <Col></Col>
           </Row>
