@@ -6,9 +6,6 @@ import InputGroup from "react-bootstrap/InputGroup"
 import Table from "react-bootstrap/Table"
 import Card from "react-bootstrap/Card"
 
-
-var fs = require('fs');
-
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -21,12 +18,8 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        console.log("component did mount")
+        console.log("DASHBOARD component mounted")
         // this.updateTracklist()
-    }
-
-    updateTracklist() {
-        console.log("updating track list")
     }
 
     changeSortingType(sortingType) {
@@ -69,10 +62,10 @@ class Dashboard extends Component {
     }
 
     submitPlaylistData() {
-        console.log("submit playlist data button pressed")
+        console.log("button pressed for submitting token and playlist data")
 
         this.props.doAPostRequest({ usertoken: this.props.token, value: this.state.formValue }, "/api/xjava", (resdata) => {
-            console.log("recieved in dashboard")
+            console.log("spotify token recieved")
             console.log(resdata)
 
             this.setState({
@@ -80,22 +73,21 @@ class Dashboard extends Component {
             }, () => {
                 setTimeout(() => {
                     this.readFile()
-                }, 20000);
+                }, 120000);
             })
         })
     }
 
     changeFormValue(value) {
-        console.log("changing form value", value)
         this.setState({
             formValue: value
         })
     }
 
     readFile() {
+        console.log('fetching track list')
         this.props.doAPostRequest({}, "/api/readFile", (resdata) => {
-            console.log("recieved in dashboard")
-            console.log(resdata)
+            console.log("track list data recieved")
             var json = (resdata + "]").trim()
             json = json.replace(',},]', "}]")
             var check = json.includes(',},{')
@@ -105,19 +97,15 @@ class Dashboard extends Component {
                 var check = json.includes(',},{')
 
             }
-            console.log(json)
             var parseData = JSON.parse(json)
-            console.log(parseData)
             parseData.forEach(element => {
                 element.playcount= parseInt(element.playcount)
             });
-            console.log(parseData.length)
+            console.log(parseData)
             this.setState({
                 trackList: parseData
             })
         })
-
-        console.log('readFile called');
     }
 
     render() {
@@ -133,28 +121,16 @@ class Dashboard extends Component {
                         onChange={(event) => { this.changeFormValue(event.target.value) }}
                     />
                     <InputGroup.Append>
-                        <Button onClick={() => this.submitPlaylistData()} variant="outline-secondary">Button</Button>
+                        <Button onClick={() => this.submitPlaylistData()} variant="primary">Submit</Button>
                     </InputGroup.Append>
                 </InputGroup>
-                {/* 
-                <Form>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Label> for example: https://open.spotify.com/playlist/xyz </Form.Label>
-                        <Form.Control
-                            
-                            as="textarea" rows="3" />
-                    </Form.Group>
-                </Form>
-                <Button variant="Graph" onClick={()=>this.buttonPress()}>Submit</Button> */}
-                {/* <Button variant="Graph" onClick={()=>this.readFile()}>Display Playlist</Button> */}
-
 
                 {this.state.trackList.length == 0 ?
                     <Card>
                         {this.state.trackListLoading == undefined
                             ?
                             <Card.Body>
-                                <Card.Title>No playlist had been entered.</Card.Title>
+                                <Card.Title>No playlist has been entered.</Card.Title>
                                 <Card.Text>
                                     Please enter a playlist URL in the Input Box Above.
                                     </Card.Text>

@@ -55,7 +55,7 @@ class App extends Component {
         <Container>
           <Row>
             <Col></Col>
-            <Col xs={8}>
+            <Col xs={8} style={{"margin-top":"25px"}}>
               {!this.state.token ?
                 <Login 
                   token={this.state.token}

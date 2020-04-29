@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button";
+
 
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';// Replace with your app's client ID, redirect URI and desired scopes
@@ -12,13 +15,9 @@ const scopes = [
   "user-top-read",
   "playlist-read-private",
   "playlist-read-collaborative",
-  // 'user-read-private',
-  // 'user-read-email',
-  //"user-read-currently-playing",
-  // "user-read-playback-state",
 ]; // Get the hash of the url
-console.log("printing hash")
-console.log(window.location.hash)
+
+
 const hash = window.location.hash
   .substring(1)
   .split("&")
@@ -29,8 +28,6 @@ const hash = window.location.hash
     }
     return initial;
   }, {});
-console.log("this is hash")
-console.log(hash)
 
 window.location.hash = "";
 
@@ -55,7 +52,6 @@ class Login extends Component {
           headers: {'Authorization': 'Bearer ' + _token }
             }, (data)=>{
               console.log(data)
-              console.log("insidereq")
             })
           
     this.props.changeUserToken(_token)
@@ -64,16 +60,21 @@ class Login extends Component {
 
 render() {
   return (
-    <div>
-
-      <a
-        className="btn btn--loginApp-link"
-        href={`${authEndpoint}?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes}`}
-      >
-        Login to Spotify
-          </a>
-
-    </div>
+      <Card>
+        <Card.Header>Spotify Login</Card.Header>
+        <Card.Body>
+          <Card.Title>Login to spotify to continue</Card.Title>
+          <Card.Text>
+            In order to use Spotlyte, you will have to authorize access to the app from your spotify account.
+          </Card.Text>
+          <Button
+            className="btn btn--loginApp-link"
+            href={`${authEndpoint}?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes}`}
+          >
+            Login to Spotify
+          </Button>
+        </Card.Body>
+      </Card>
   );
 }
 }
