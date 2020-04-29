@@ -64,7 +64,7 @@ public class DataExtracter {
             process.waitFor();
 
         } catch(Exception e) {
-            System.out.println("Error");
+            System.out.println("Error could not create data file");
         }
     }
 
