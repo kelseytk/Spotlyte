@@ -109,12 +109,12 @@ public class parsingMain{
 		try{
 			FileWriter fileWriter = new FileWriter(filename, true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.printf("    {\n");
-			printWriter.printf("        songName: \'%s\',\n", track.getName());
-			printWriter.printf("        artistName: \'%s\',\n", track.getArtist());
-			printWriter.printf("        albumName: \'%s\',\n", track.getAlbum());
-			printWriter.printf("        playcount: \'%d\',\n", track.getPlaycount());
-			printWriter.printf("    },\n");
+			// printWriter.printf("    {\n");
+			printWriter.printf("\"songName\":", track.getName());
+			printWriter.printf("\"artistName\":", track.getArtist());
+			printWriter.printf("\"albumName\":", track.getAlbum());
+			printWriter.printf("\"playcount\":", track.getPlaycount());
+			// printWriter.printf("    },\n");
 			printWriter.close();
 		}
 		catch(IOException e){
