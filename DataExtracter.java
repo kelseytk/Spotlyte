@@ -81,7 +81,7 @@ public class DataExtracter {
             if(!sc.hasNextLine()) { System.out.println("No lines found."); }
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();
-                //System.out.println(line);
+                System.out.println(line);
                 if(trackAttributeCounter == 3) { 
                     trackAttributeCounter = 0;
                     Track currTrack = new Track(name, album, albumID);
