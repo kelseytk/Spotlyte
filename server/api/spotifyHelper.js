@@ -24,8 +24,6 @@ module.exports = class SpotifyHelper {
       console.log(`stdout: ${stdout}`);
     });
 
-
-
     callback({})
   }
 }

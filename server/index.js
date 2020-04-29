@@ -24,7 +24,7 @@ const filereader= new FileReader()
 app.post('/api/readFile', (req, res) => {
     console.log("readfile called")
     res.setHeader('Content-Type', 'application/json');
-    filereader.readFile("./server/playcountdata.txt", (data)=>{
+    filereader.readFile("tracksdata.txt", (data)=>{
         res.send(JSON.stringify({ success: true, data:data }));
     })
     
@@ -59,6 +59,7 @@ app.post('/api/xjava', (req, res) => {
     })
     
 });
+
 
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
