@@ -8,6 +8,7 @@ const clientId = "410189d5a8a2470eb3b25894300b497c";
 const clientSecret ="f5688ac08e51423a846e6889cc45054f";
 const redirectUri = "http://localhost:3000";
 const scopes = [
+  "playlist-read-collaborative",
   "user-top-read",
   // 'user-read-private',
   // 'user-read-email',
@@ -65,7 +66,7 @@ render() {
 
       <a
         className="btn btn--loginApp-link"
-        href={`${authEndpoint}?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}`}
+        href={`${authEndpoint}?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes}`}
       >
         Login to Spotify
           </a>
