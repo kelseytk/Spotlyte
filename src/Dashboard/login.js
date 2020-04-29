@@ -40,7 +40,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    
+    //need auth token
     let _token = hash.access_token;
     if (_token) {
       console.log("client token found, making implicit grant")
@@ -56,7 +56,6 @@ class Login extends Component {
             })
           
     this.props.changeUserToken(_token)
-
   }
 }
 
