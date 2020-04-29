@@ -73,7 +73,7 @@ class Dashboard extends Component {
             }, () => {
                 setTimeout(() => {
                     this.readFile()
-                }, 120000);
+                }, 15000);
             })
         })
     }
