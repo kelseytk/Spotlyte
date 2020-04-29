@@ -81,7 +81,7 @@ public class DataExtracter {
             if(!sc.hasNextLine()) { System.out.println("No lines found."); }
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();
-                System.out.println(line);
+                //System.out.println(line);
                 if(trackAttributeCounter == 3) { 
                     trackAttributeCounter = 0;
                     Track currTrack = new Track(name, album, albumID);
@@ -91,24 +91,21 @@ public class DataExtracter {
                 if(line.contains("        \"href\" :")) {
                     String splitStrings[] = line.split("albums/");
                     albumID = splitStrings[1];
-                    albumID = albumID.replace("\"", "");
-                    albumID = albumID.replace(",", "");
+                    albumID = albumID.substring(0, albumID.length()-2);
                     trackAttributeCounter++;
-                    //System.out.println(albumID);
+                    System.out.println("ID: " + albumID);
                 }else if(line.contains("        \"name\" :")) {
                     String splitStrings[] = line.split("name\" : ");
                     album = splitStrings[1]; 
-                    album = album.replace("\"", "");
-                    album = album.replace(",", "");
+                    album = album.substring(1, album.length()-1);
                     trackAttributeCounter++;
-                    //System.out.println(album);
+                    System.out.println("Album: " + album);
                 }else if(line.contains("\"name\"")) {
                     String splitStrings[] = line.split("name\" : ");
                     name = splitStrings[1];
-                    name = name.replace("\"", "");
-                    name = name.replace(",", "");
+                    name = name.substring(1, name.length()-1);
                     trackAttributeCounter++;
-                    //System.out.println(name);
+                    System.out.println("Song: " + name);
                 }
             }
 
