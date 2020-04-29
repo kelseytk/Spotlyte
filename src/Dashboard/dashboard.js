@@ -104,6 +104,7 @@ class Dashboard extends Component {
     buttonPress(){
         console.log("buttonIsPressed")
         //perform request here
+        //user token here, should change to auth token but how get???
         this.props.doAPostRequest({usertoken:this.props.token, value:this.state.formValue}, "/api/xjava", (resdata)=>{
             console.log("recieved in dashboard")
             console.log(resdata)
