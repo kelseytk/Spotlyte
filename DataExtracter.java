@@ -30,8 +30,8 @@ public class DataExtracter {
     /**
      * Constructor for objects of class DataExtracter
      */
-    public DataExtracter(String playlistName, String playlistID, String authorizationToken) {
-        this.playlistID = playlistID;
+    public DataExtracter(String playlistName, String playlistURL, String authorizationToken) {
+        this.playlistID = getPlaylistID(playlistURL);
         this.playlistName = playlistName;
         this.authorization = authorizationToken;
         createDataFile();
@@ -48,6 +48,16 @@ public class DataExtracter {
             //tracks[i].printTrack();
             parsingMain.writePlaylistFile(tracks[i], "tracksdata.txt");
         }
+    }
+
+    private String getPlaylistID(String URL) {
+        String ID = "";
+        String split1[] = URL.split("playlist/");
+        String split2[] = split1[1].split("si=");
+        ID = split2[0].substring(0, split2[0].length()-1);
+        System.out.println(ID);
+
+        return ID;
     }
 
     /**
