@@ -62,6 +62,7 @@ class App extends Component {
                   changeUserToken={(t)=>{
                     this.changeUserToken(t)
                   }}
+                    doAPostRequest={(body, endpoint, callback)=>{this.doAPostRequest(body, endpoint, callback)}}
                 /> 
                   :
                   <Dashboard
