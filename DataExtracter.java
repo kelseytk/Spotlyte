@@ -16,6 +16,7 @@ public class DataExtracter {
     Process process;
     File file = new File("albumdata.txt");
     File playcountFile = new File("playcountdata.txt");
+    File trackFile = new File("tracksdata.txt");
     Track tracks[] = new Track[10000];
 
     /**
@@ -36,6 +37,10 @@ public class DataExtracter {
         this.authorization = authorizationToken;
         createDataFile();
         createTracks();
+        try {
+        Writer wr1 = new FileWriter(trackFile);
+        wr1.write("[\n");
+        wr1.close();
         
         if(tracks[0] == null) { System.out.println("No tracks found!"); }
         for(int i = 0; tracks[i] != null; i++) {
@@ -46,8 +51,17 @@ public class DataExtracter {
             tracks[i].setArtist(parsingMain.getArtist());
             
             //tracks[i].printTrack();
-            parsingMain.writePlaylistFile(tracks[i], "tracksdata.txt");
+            parsingMain.writePlaylistFile(tracks[i], trackFile.getName());
         }
+
+        Writer wr2 = new FileWriter(trackFile, true);
+        wr2.write("\n]");
+        wr2.close();
+
+        } catch(Exception e) {
+            System.out.println("Track writing failed");
+        }
+
     }
 
     private String getPlaylistID(String URL) {
